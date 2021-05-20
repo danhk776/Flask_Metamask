@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <style>
+body {
+  //background-color: #39363D;
+  background-image: url("{{ url_for('static', filename='image/anysafe.png') }}");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.enableEthereumButton {
+    background-color:#E2DAF2;
+    border-radius:15px;
+    //border:1px solid #3F41E8;
+    border: none;
+    display:inline-block;
+    cursor:pointer;
+    color:grey;
+    font-family:Arial;
+    font-size:16px;
+    padding:13px 20px;
+    text-decoration:none;
+    color: #5D8789
+    }
+    .enableEthereumButton:active {
+    position:relative;
+    top:1px;
+    }
+    .enableEthereumButton:hover {
+    opacity: 0.5;
+    }
+
+.title {
+color: #5D8789;
+font-family: arial, sans-serif;
+font-size: 30px;
+font-weight: bold;
+margin-top: 0px;
+margin-bottom: 0px;
+}
+
+</style>
+</head>
+<body>
+
+<div style="display:flex; justify-content:flex-end; width:100%; padding:0;">
+    <button class="enableEthereumButton">Connect to Metamask</button>
+</div>
+<header>
+</header>
+<button class="testButton">Test Button</button>
+<h2>Tokens: <span class="test"></span></h2>
+<h2>SAFEMOON Balance: <span class="token_balance"></span></h2>
+<h3>Account: <span class="showAccount"></span></h3>
+<h3>Balance: <span class="showBalance"></span></h3>
+
+
+<script>
+const ethereumButton = document.querySelector('.enableEthereumButton');
+const testButton = document.querySelector('.testButton');
+const tokenButton = document.querySelector('.tokenButton');
+
+const showAccount = document.querySelector('.showAccount');
+const test = document.querySelector('.test');
+const token_balance = document.querySelector('.token_balance');
+
+
+ethereumButton.addEventListener('click', () => {
+  getAccount();
+});
+
+testButton.addEventListener('click', () => {
+  getAjax();
+});
+
+tokenButton.addEventListener('click', () => {
+  get_balance_from_token();
+});
+
+
+function getAjax(value) {
+    $.post("/postmethod",
+    {'javascript_data': value},
+    function(data){test.innerHTML = data.val;}
+    );
+}
+
+function get_tokens_from_wallet(address) {
+    $.post("/token_list",
+    {'address': address},
+    function(data){test.innerHTML = data;}
+    );
+}
+
+function user_connection(address) {
+    $.post("/connection",
+    {'address': address},
+    function(data){test.innerHTML = Object.values(data);}
+    );
+}
+
+
+async function getAccount() {
+   const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+   const account = accounts[0];
+   showAccount.innerHTML = account;
+   // returns list of tokens hold by user
+   get_balance_from_token();
+   user_connection(account)
+}
+
+async function get_balance_from_token() {
+    // example with safemoon
+    $.post("/token_balance",
+    {'address': '0x3fB5DF2Da721780484B0d578f3790B130ffD9cf6', 'contract': '0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3'},
+    function(data){token_balance.innerHTML = Object.values(data);}
+    );
+}
+
+</script>
+
+</body>
+</html>

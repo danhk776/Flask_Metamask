@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">
+	  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	  <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+	  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+	  <style>
+body {
+  //background-color: #39363D;
+  background-image: url("{{ url_for('static', filename='image/anysagesite.png') }}");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.enableEthereumButton {
+    background-color:#E2DAF2;
+    border-radius:15px;
+    //border:1px solid #3F41E8;
+    border: none;
+    display:inline-block;
+    cursor:pointer;
+    color:grey;
+    font-family:Arial;
+    font-size:16px;
+    padding:13px 20px;
+    text-decoration:none;
+    color: #5D8789
+    }
+    .enableEthereumButton:active {
+    position:relative;
+    top:1px;
+    }
+    .enableEthereumButton:hover {
+    opacity: 0.5;
+    }
+
+.showAccount {
+color: white;
+position: absolute;
+margin:0px;
+padding:20px;
+font-size:16px;}
+
+.showAccount:active {
+ position:relative;
+ top:1px;
+ vertical-align: top;
+ text-align: left;}
+
+</style>
+	</head>
+	<body>
+	<div style="display:flex; justify-content:flex-end; width:100%; padding:10px;">
+		<button class="enableEthereumButton">Connect to Metamask</button>
+	</div>
+	<p align="left"> <img src="{{ url_for('static', filename='image/metamask_logo.svg') }}" width="40" height="40" />
+		<span class="showAccount"></span></p>
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="heading-section"></h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="table-wrap">
+						<table class="table table-bordered table-dark table-hover">
+						  <thead>
+						    <tr>
+						      <th></th>
+						      <th>Balance</th>
+						      <th>Return</th>
+						      <th>Staking Reward</th>
+								<th>Staking Time</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr>
+						      <th scope="row"><img src="https://s2.coinmarketcap.com/static/img/coins/64x64/8757.png" width="25" height="25" /> SAFEMOON</th>
+						      <td><span class="safemoon"></span></td>
+						      <td><span class="safemoon_apy"></span></td>
+						      <td><span class="safemoon_rewards"></span></td>
+								<td><span class="staking_time"></span></td>
+						    </tr>
+						    <tr>
+						      <th scope="row"><img src="https://s2.coinmarketcap.com/static/img/coins/64x64/9273.png" width="25" height="25" /> OCTA</th>
+								<td><span class="octa"></span></td>
+						      <td><span class="octa_apy"></span></td>
+						      <td><span class="octa_rewards"></span></td>
+						    </tr>
+						  </tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<header>
+	</header>
+	<script>
+const ethereumButton = document.querySelector('.enableEthereumButton');
+
+const showAccount = document.querySelector('.showAccount');
+
+const safemoon = document.querySelector('.safemoon');
+const safemoon_apy = document.querySelector('.safemoon_apy');
+const safemoon_rewards = document.querySelector('.safemoon_rewards');
+const staking_time = document.querySelector('.staking_time');
+
+
+const octa = document.querySelector('.octa');
+const octa_apy = document.querySelector('.octa_apy');
+const octa_rewards = document.querySelector('.octa_rewards');
+
+
+ethereumButton.addEventListener('click', () => {
+  getAccount();
+});
+
+testButton.addEventListener('click', () => {
+  getAjax();
+});
+
+tokenButton.addEventListener('click', () => {
+  get_balance_from_token();
+});
+
+
+function getAjax(value) {
+    $.post("/postmethod",
+    {'javascript_data': value},
+    function(data){test.innerHTML = data.val;}
+    );
+}
+
+function get_tokens_from_wallet(address) {
+    $.post("/token_list",
+    {'address': address},
+    function(data){test.innerHTML = data;}
+    );
+}
+
+function user_connection(address) {
+    $.post("/connection",
+    {'address': address}
+    );
+}
+
+
+async function getAccount() {
+   const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+   const account = accounts[0];
+   showAccount.innerHTML = account;
+   // returns list of tokens hold by user
+   user_connection(account);
+   setInterval(
+   function(){
+   get_balance_from_user(account);
+   // get apy
+   },
+   3000);
+}
+
+async function get_balance_from_user(address) {
+    $.post("/token_balance",
+    {'address': address},
+    function(data){
+    safemoon.innerHTML = data.balances[0];
+    safemoon_apy.innerHTML = data.apy[0];
+    safemoon_rewards.innerHTML = data.rewards[0];
+	staking_time.innerHTML = moment(data.staking_time[0]).format("DD-MM-YYYY HH:mm:ss");
+    octa.innerHTML = data.balances[1];
+    octa_apy.innerHTML = data.apy[1];
+    octa_rewards.innerHTML = data.rewards[1];
+    }
+    );
+}
+
+</script>
+
+	</body>
+</html>
+

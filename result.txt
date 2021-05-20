@@ -1,0 +1,300 @@
+{
+    "data": {
+        "ethereum": {
+            "address": [
+                {
+                    "balances": [
+                        {
+                            "value": 1.57428638,
+                            "currency": {
+                                "address": "-",
+                                "symbol": "BNB",
+                                "tokenType": ""
+                            }
+                        },
+                        {
+                            "value": 100.0,
+                            "currency": {
+                                "address": "0x476da763fb6d22b8465f7886d2d652a428a93984",
+                                "symbol": "MERO",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 200.0,
+                            "currency": {
+                                "address": "0x3397feeedab5e18351787e55f1cfcf1eb310c188",
+                                "symbol": "DOGEF",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 134887.948085,
+                            "currency": {
+                                "address": "0xc9e822aef89dae5b6b6a8a23a1ac73955cfd6cd1",
+                                "symbol": "KENO",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 4.7,
+                            "currency": {
+                                "address": "0x69af49e82ea59a97f3879547f67b913c216c3714",
+                                "symbol": "UNIT",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 1000000000.0,
+                            "currency": {
+                                "address": "0x5b7949d22cbdc857d96f76793be0d7922c0dcf5a",
+                                "symbol": "SAFESPACEX",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 19563.62641836,
+                            "currency": {
+                                "address": "0xfe75cd11e283813ec44b4592476109ba3706cef6",
+                                "symbol": "FAIRMOON",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 0.27,
+                            "currency": {
+                                "address": "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+                                "symbol": "Cake",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 0.0,
+                            "currency": {
+                                "address": "0xa527a61703d82139f8a06bc30097cc9caa2df5a6",
+                                "symbol": "Cake-LP",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 0.00081437,
+                            "currency": {
+                                "address": "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+                                "symbol": "BUSD",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 1.0,
+                            "currency": {
+                                "address": "0xad90c05bc51672eedfee36e58b3ff1a78bbc146d",
+                                "symbol": "XSPACE",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 1860000000.0,
+                            "currency": {
+                                "address": "0x4d4cc29b9c4e413cfe5f898e16280f11db57e186",
+                                "symbol": "Hamtaro",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 7569.0,
+                            "currency": {
+                                "address": "0xd50787a5f21bcc10c1a738e7de33001786c5fc24",
+                                "symbol": "SMARTWORTH",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 4000000.0,
+                            "currency": {
+                                "address": "0xb4e380e08e12e3e5243fbbb3d7aa2de9ad25e54d",
+                                "symbol": "SAFEMOONDAO",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 970236.74474064,
+                            "currency": {
+                                "address": "0xca578afee65fd2268d383f8fc4a9fc6ae1d2def0",
+                                "symbol": "FAIR",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 200.0,
+                            "currency": {
+                                "address": "0xd102296958420985c16f879c4db8b1e70a0eeacc",
+                                "symbol": "WJB",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 200.0,
+                            "currency": {
+                                "address": "0x0bbd11dd1db6302faf0f318abe84661a52f7bc2c",
+                                "symbol": "XGT",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 4000000.0,
+                            "currency": {
+                                "address": "0xee843405915f4d57a677d94151a0f280b7ea1fe3",
+                                "symbol": "DOGELON",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 0.0,
+                            "currency": {
+                                "address": "0xcd14855150335aae984aa6d281e090c27035c692",
+                                "symbol": "Cake-LP",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 0.002,
+                            "currency": {
+                                "address": "0x451d0e4b04a16223bbaece67b2276223db0d19da",
+                                "symbol": "GCR",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 8.5,
+                            "currency": {
+                                "address": "0x91e4470d0cd8566f2565cc00118ee30282c753ab",
+                                "symbol": "ID",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 4000000.0,
+                            "currency": {
+                                "address": "0xed7a67ab5f9617a38aeddabbf741c90b8db4b33b",
+                                "symbol": "SAFEPLUTO",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 0.58881651,
+                            "currency": {
+                                "address": "0x42712df5009c20fee340b245b510c0395896cf6e",
+                                "symbol": "DFT",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 107891198.0,
+                            "currency": {
+                                "address": "0xb478ccb0c76a8fde28b1f5f2a67aa960e3ee44f6",
+                                "symbol": "PEPPA",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 0.0,
+                            "currency": {
+                                "address": "0x8fbcbd7e30b1733965a8980bf7ae2ca1c0c456cc",
+                                "symbol": "Cake-LP",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 212792610149.52298,
+                            "currency": {
+                                "address": "0x2e291e1c9f85a86d0c58ae15621aac005a8b2ead",
+                                "symbol": "ZEP",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 99999999999.99998,
+                            "currency": {
+                                "address": "0xcbdf0947a779a13713517ee9d56fc845ba98444a",
+                                "symbol": "BCAT",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 0.0,
+                            "currency": {
+                                "address": "0x9adc6fb78cefa07e13e9294f150c1e8c1dd566c0",
+                                "symbol": "Cake-LP",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 49999999999.99999,
+                            "currency": {
+                                "address": "0x4e4fd7753565472d2792b6913b553864224130c4",
+                                "symbol": "MDG",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 65.66224291,
+                            "currency": {
+                                "address": "0xe86d075051f20eb8c741007cb8e262f4519944ee",
+                                "symbol": "Cake-LP",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 0.0,
+                            "currency": {
+                                "address": "0x009cf7bc57584b7998236eff51b98a168dcea9b0",
+                                "symbol": "SYRUP",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 0.0,
+                            "currency": {
+                                "address": "0x5e74094cd416f55179dbd0e45b1a8ed030e396a1",
+                                "symbol": "PLT",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 36464389949.02457,
+                            "currency": {
+                                "address": "0xfad8e46123d7b4e77496491769c167ff894d2acb",
+                                "symbol": "FOX",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 628054573448.5906,
+                            "currency": {
+                                "address": "0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3",
+                                "symbol": "SAFEMOON",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 39670575097.6633,
+                            "currency": {
+                                "address": "0xc5bcda8ac874f467e475a7a1f655fc25e7fdd9c8",
+                                "symbol": "SAFEPUMP",
+                                "tokenType": "ERC20"
+                            }
+                        },
+                        {
+                            "value": 0.0,
+                            "currency": {
+                                "address": "0x5d684adaf3fcfe9cfb5cede3abf02f0cdd1012e3",
+                                "symbol": "LIEN",
+                                "tokenType": "ERC20"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
