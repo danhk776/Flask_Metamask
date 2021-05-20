@@ -9,7 +9,7 @@ from metamask import get_token_balance_from_contract, get_token_list_from_addres
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('table copie.html')
 
 
 @app.route('/table')
