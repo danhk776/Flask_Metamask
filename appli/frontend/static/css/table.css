@@ -8117,7 +8117,7 @@ a.text-dark:hover, a.text-dark:focus {
     border-collapse: collapse !important; }
     .table td,
     .table th {
-      background-color: #fff !important; }
+      background-color: #DBDBDB !important; }
   .table-bordered th,
   .table-bordered td {
     border: 1px solid #dee2e6 !important; }
@@ -8127,10 +8127,10 @@ a.text-dark:hover, a.text-dark:focus {
     .table-dark td,
     .table-dark thead th,
     .table-dark tbody + tbody {
-      border-color: #dee2e6; }
+      border-color: #DBDBDB; }
   .table .thead-dark th {
     color: inherit;
-    border-color: #dee2e6; } }
+    border-color: #DBDBDB; } }
 
 body {
   font-family: "Poppins", Arial, sans-serif;
@@ -8172,7 +8172,7 @@ h1, h2, h3, h4, h5,
 
 .heading-section {
   font-size: 28px;
-  color: #fff; }
+  color: #DBDBDB; }
 
 .img {
   background-size: cover;
@@ -8184,13 +8184,15 @@ h1, h2, h3, h4, h5,
 
 .table {
   min-width: 1000px !important;
-  width: 100%; }
+  width: 100%;
+  background-color: #DBDBDB;}
   .table thead th {
     border: none;
     padding: 20px 30px;
     font-size: 14px;
-    color: #fff;
-    border-bottom: 4px solid #2b3035; }
+    color: #DBDBDB;
+    border-bottom: 4px solid #2b3035;
+    background-color: #DBDBDB;}
   .table tbody tr {
     margin-bottom: 10px; }
   .table tbody th, .table tbody td {

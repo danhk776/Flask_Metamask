@@ -37,11 +37,7 @@ def return_token_list_from_balance():
 def return_token_balance_from_address():
     js_data_address = request.form['address']
     metrics = get_user_token_balance(address=js_data_address)
-    lof_balance = metrics['balances']
-    apy = metrics['apy']
-    rewards = metrics['rewards']
-    staking_time = metrics['staking_time']
-    return {"balances": lof_balance, 'apy': apy, 'rewards': rewards, 'staking_time': staking_time}
+    return metrics
 
 
 @app.route('/connection', methods=['POST'])

@@ -25,10 +25,14 @@ BINANCE_API_KEY = 'QAM1FFIJCJBSQAC3E3J6TXHB3KJVMM4ZJY'
 bsc = BscScan(BINANCE_API_KEY)
 chain = {'bsc': bsc}
 
-auto_reward_list = {'SAFEMOON': '0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3',
-                     'SAFETESLA': '0xA1efCe38CB265Af369e891bC3026d0285545D4E5'}
+auto_reward_list = {'0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3': 'SAFEMOON',
+                     '0xacfc95585d80ab62f67a14c566c1b7a49fe91167': 'FEG',
+                    '0x3ad9594151886ce8538c1ff615efa2385a8c3a88': 'SAFEMARS',
+                    '0x380624a4a7e69db1ca07deecf764025fc224d056': 'SAFEBTC',
+                    '0xfad8e46123d7b4e77496491769c167ff894d2acb': 'FOX',
+                    '0x86c3e4ffacdb3af628ef985a518cd6ee22a22b28': 'OCTA'}
 
-# SAMPLE ADRESS AND CONTRACT TO PLAY WITH
+# SAMPLE ADDRESS AND CONTRACT TO PLAY WITH
 
 add_1 = "0x7b30F1176949c30F9F571195EB145F2cE5C3AFA1"
 add_2 = "0x3fB5DF2Da721780484B0d578f3790B130ffD9cf6"
@@ -92,11 +96,13 @@ def get_token_list_from_address(address, network):
 def add_token_from_user(user):
     df_user_tokens = get_token_list_from_address(address=user.address, network='bsc')
     # retrieve user auto reward tokens
-    df_auto = df_user_tokens[df_user_tokens['symbol'].isin(auto_reward_list.keys())]
+    # TODO PUT LOWER CASE AND KEY VALUE
+    df_auto = df_user_tokens[df_user_tokens['symbol'].isin(auto_reward_list.values())]
     # if there are auto tokens add them to database and record values
 
     if not df_auto.empty:
-        lof_contract = sorted(df_auto['address'].values, key=list(auto_reward_list.values()).index)
+        # lof_contract = sorted(df_auto['address'].values, key=list(auto_reward_list.values()).index)
+        lof_contract = df_auto['address'].values
         lof_value = [get_token_balance_from_contract(contract=x, address=user.address, network='bsc')
                      for x in lof_contract]
         for i in np.arange(len(lof_contract)):
@@ -118,15 +124,19 @@ def add_token_from_user(user):
 
 def get_user_token_balance(address):
     # retrieve user token balance
+    # TODO ONLY ONE LOOP
     u = User.query.filter(User.address == address).all()[0]
     lof_token = Token.query.filter(Token.user_id == u.id).all()
+    ll = [t.contract for t in lof_token]
+    kk = [auto_reward_list.get(x) for x in ll]
     lof_balance = [round(get_token_balance_from_contract(contract=t.contract, address=address, network='bsc')['value'], 3)
                    for t in lof_token]
     lof_old_balance = [t.record['value'] for t in lof_token]
-    lof_apy = [round((x-y)/y, 7) for x, y in zip(lof_balance, lof_old_balance)]
-    lof_rewards = [round(x-y, 3) for x, y in zip(lof_balance, lof_old_balance)]
-    staking_time = [t.record['log_time'] for t in lof_token]
-    return {'balances': lof_balance, 'apy': lof_apy, 'rewards': lof_rewards, 'staking_time': staking_time}
+    data = {k: [x, round((x-y)/y, 7), round(x-y, 3)] for k, x, y in zip(kk, lof_balance, lof_old_balance)}
+    res = data.copy()
+    y = {i: [None, None, None] for i in list(set(auto_reward_list.values())-set(data.keys()))}
+    res.update(y)
+    return res
 
 
 def add_user(address):

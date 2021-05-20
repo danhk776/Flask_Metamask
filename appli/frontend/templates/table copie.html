@@ -3,10 +3,9 @@
   <head>
     <meta charset="utf-8">
 
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">
-	  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/table-color.css') }}">
+	 <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
 
-	  <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
 
 	  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
@@ -14,9 +13,9 @@
 	  <style>
 body {
   //background-color: #39363D;
-  background-image: url("{{ url_for('static', filename='image/anysagesite.png') }}");
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-image: url("{{ url_for('static', filename='image/anysafe_new.png') }}");
+  //background-size: cover;
+  //background-repeat: no-repeat;
 }
 
 .enableEthereumButton {
@@ -31,7 +30,7 @@ body {
     font-size:16px;
     padding:13px 20px;
     text-decoration:none;
-    color: #5D8789
+    color: #5271FF
     }
     .enableEthereumButton:active {
     position:relative;
@@ -42,17 +41,19 @@ body {
     }
 
 .showAccount {
-color: white;
+color: #545454;
 position: absolute;
 margin:0px;
 padding:20px;
 font-size:16px;}
 
 .showAccount:active {
- position:relative;
- top:1px;
- vertical-align: top;
- text-align: left;}
+ //position:relative;
+ //top:1px;
+ //vertical-align: top;
+ //text-align: left;
+     position:relative;
+    top:1px;}
 
 </style>
 	</head>
@@ -62,6 +63,7 @@ font-size:16px;}
 	</div>
 	<p align="left"> <img src="{{ url_for('static', filename='image/metamask_logo.svg') }}" width="40" height="40" />
 		<span class="showAccount"></span></p>
+
 	<section class="ftco-section">
 		<div class="container">
 			<div class="row justify-content-center">
@@ -72,37 +74,69 @@ font-size:16px;}
 			<div class="row">
 				<div class="col-md-12">
 					<div class="table-wrap">
-						<table class="table table-bordered table-dark table-hover">
-						  <thead>
-						    <tr>
-						      <th></th>
-						      <th>Balance</th>
-						      <th>Return</th>
-						      <th>Staking Reward</th>
-								<th>Staking Time</th>
-						    </tr>
-						  </thead>
-						  <tbody>
-						    <tr>
-						      <th scope="row"><img src="https://s2.coinmarketcap.com/static/img/coins/64x64/8757.png" width="25" height="25" /> SAFEMOON</th>
-						      <td><span class="safemoon"></span></td>
-						      <td><span class="safemoon_apy"></span></td>
-						      <td><span class="safemoon_rewards"></span></td>
+						<table class="table">
+							<thead class="thead-primary">
+							<tr>
+								<th></th>
+								<th>BALANCE</th>
+								<th>YIELD %</th>
+								<th>STAKING REWARDS</th>
+								<th>STAKING TIME</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<th scope="row">SAFEMOON</th>
+								<td><span class="safemoon"></span></td>
+								<td><span class="safemoon_apy"></span></td>
+								<td><span class="safemoon_rewards"></span></td>
 								<td><span class="staking_time"></span></td>
-						    </tr>
-						    <tr>
-						      <th scope="row"><img src="https://s2.coinmarketcap.com/static/img/coins/64x64/9273.png" width="25" height="25" /> OCTA</th>
+							</tr>
+							<tr>
+								<th scope="row">FEG</th>
+								<td><span class="feg"></span></td>
+								<td><span class="feg_apy"></span></td>
+								<td><span class="feg_rewards"></span></td>
+								<td><span class="staking_time"></span></td>
+							</tr>
+							<tr>
+								<th scope="row">SAFEMARS</th>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<th scope="row">SAFEBTC</th>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<th scope="row">FOX</th>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<th scope="row">OCTA</th>
 								<td><span class="octa"></span></td>
-						      <td><span class="octa_apy"></span></td>
-						      <td><span class="octa_rewards"></span></td>
-						    </tr>
-						  </tbody>
+								<td><span class="octa_apy"></span></td>
+								<td><span class="octa_rewards"></span></td>
+								<td><span class="staking_time"></span></td>
+							</tr>
+							</tbody>
 						</table>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
+
+
+
 	<header>
 	</header>
 	<script>
@@ -115,6 +149,9 @@ const safemoon_apy = document.querySelector('.safemoon_apy');
 const safemoon_rewards = document.querySelector('.safemoon_rewards');
 const staking_time = document.querySelector('.staking_time');
 
+const feg = document.querySelector('.feg');
+const feg_apy = document.querySelector('.feg_apy');
+const feg_rewards = document.querySelector('.feg_rewards');
 
 const octa = document.querySelector('.octa');
 const octa_apy = document.querySelector('.octa_apy');
@@ -164,7 +201,6 @@ async function getAccount() {
    setInterval(
    function(){
    get_balance_from_user(account);
-   // get apy
    },
    3000);
 }
@@ -173,13 +209,18 @@ async function get_balance_from_user(address) {
     $.post("/token_balance",
     {'address': address},
     function(data){
-    safemoon.innerHTML = data.balances[0];
-    safemoon_apy.innerHTML = data.apy[0];
-    safemoon_rewards.innerHTML = data.rewards[0];
-	staking_time.innerHTML = moment(data.staking_time[0]).format("DD-MM-YYYY HH:mm:ss");
-    octa.innerHTML = data.balances[1];
-    octa_apy.innerHTML = data.apy[1];
-    octa_rewards.innerHTML = data.rewards[1];
+    safemoon.innerHTML = data.SAFEMOON[0];
+    safemoon_apy.innerHTML = data.SAFEMOON[1];
+    safemoon_rewards.innerHTML = data.SAFEMOON[2];
+
+    feg.innerHTML = data.FEG[0];
+    feg_apy.innerHTML = data.FEG[1];
+    feg_rewards.innerHTML = data.FEG[2];
+
+	//staking_time.innerHTML = moment(data.staking_time[0]).format("DD-MM-YYYY HH:mm:ss");
+    octa.innerHTML = data.OCTA[0];
+    octa_apy.innerHTML = data.OCTA[1];
+    octa_rewards.innerHTML = data.OCTA[2];
     }
     );
 }
