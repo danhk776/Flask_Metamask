@@ -1,1 +1,1 @@
-web: gunicorn Flask_Metamask:hello
+web: flask db upgrade; gunicorn appli:app
