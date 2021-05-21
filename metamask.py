@@ -132,7 +132,7 @@ def get_user_token_balance(address):
     lof_balance = [round(get_token_balance_from_contract(contract=t.contract, address=address, network='bsc')['value'], 3)
                    for t in lof_token]
     lof_old_balance = [t.record['value'] for t in lof_token]
-    data = {k: [x, round((x-y)/y, 7), round(x-y, 3)] for k, x, y in zip(kk, lof_balance, lof_old_balance)}
+    data = {k: [x, round(100*((x-y)/y), 7), round(x-y, 3)] for k, x, y in zip(kk, lof_balance, lof_old_balance)}
     res = data.copy()
     y = {i: [None, None, None] for i in list(set(auto_reward_list.values())-set(data.keys()))}
     res.update(y)

@@ -41,7 +41,7 @@ body {
     }
 
 .showAccount {
-color: #545454;
+color: #EFEFEF;
 position: absolute;
 margin:0px;
 padding:20px;
@@ -61,7 +61,7 @@ font-size:16px;}
 	<div style="display:flex; justify-content:flex-end; width:100%; padding:10px;">
 		<button class="enableEthereumButton">Connect to Metamask</button>
 	</div>
-	<p align="left"> <img src="{{ url_for('static', filename='image/metamask_logo.svg') }}" width="40" height="40" />
+	<p align="left" style="font-weight:bold;"> <img src="{{ url_for('static', filename='image/metamask_logo.svg') }}" width="40" height="40" />
 		<span class="showAccount"></span></p>
 
 	<section class="ftco-section">
@@ -195,7 +195,7 @@ function user_connection(address) {
 async function getAccount() {
    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
    const account = accounts[0];
-   showAccount.innerHTML = account;
+   showAccount.innerHTML = account.slice(0, 15) + "...";
    // returns list of tokens hold by user
    user_connection(account);
    setInterval(
@@ -210,16 +210,16 @@ async function get_balance_from_user(address) {
     {'address': address},
     function(data){
     safemoon.innerHTML = data.SAFEMOON[0];
-    safemoon_apy.innerHTML = data.SAFEMOON[1];
+    safemoon_apy.innerHTML = data.SAFEMOON[1] + '%';
     safemoon_rewards.innerHTML = data.SAFEMOON[2];
 
     feg.innerHTML = data.FEG[0];
-    feg_apy.innerHTML = data.FEG[1];
+    feg_apy.innerHTML = data.FEG[1] + '%';;
     feg_rewards.innerHTML = data.FEG[2];
 
 	//staking_time.innerHTML = moment(data.staking_time[0]).format("DD-MM-YYYY HH:mm:ss");
     octa.innerHTML = data.OCTA[0];
-    octa_apy.innerHTML = data.OCTA[1];
+    octa_apy.innerHTML = data.OCTA[1] + '%';
     octa_rewards.innerHTML = data.OCTA[2];
     }
     );
