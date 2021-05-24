@@ -25,12 +25,12 @@ BINANCE_API_KEY = 'QAM1FFIJCJBSQAC3E3J6TXHB3KJVMM4ZJY'
 bsc = BscScan(BINANCE_API_KEY)
 chain = {'bsc': bsc}
 
-auto_reward_list = {'0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3': 'SAFEMOON',
-                     '0xacfc95585d80ab62f67a14c566c1b7a49fe91167': 'FEG',
-                    '0x3ad9594151886ce8538c1ff615efa2385a8c3a88': 'SAFEMARS',
-                    '0x380624a4a7e69db1ca07deecf764025fc224d056': 'SAFEBTC',
-                    '0xfad8e46123d7b4e77496491769c167ff894d2acb': 'FOX',
-                    '0x86c3e4ffacdb3af628ef985a518cd6ee22a22b28': 'OCTA'}
+auto_reward_list = {'SAFEMOON': '0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3',
+                     'FEG': '0xacfc95585d80ab62f67a14c566c1b7a49fe91167',
+                    'SAFEMARS': '0x3ad9594151886ce8538c1ff615efa2385a8c3a88',
+                    'SAFEBTC': '0x380624a4a7e69db1ca07deecf764025fc224d056',
+                    'FOX': '0xfad8e46123d7b4e77496491769c167ff894d2acb',
+                    'OCTA': '0x86c3e4ffacdb3af628ef985a518cd6ee22a22b28'}
 
 # SAMPLE ADDRESS AND CONTRACT TO PLAY WITH
 
@@ -97,7 +97,7 @@ def add_token_from_user(user):
     df_user_tokens = get_token_list_from_address(address=user.address, network='bsc')
     # retrieve user auto reward tokens
     # TODO PUT LOWER CASE AND KEY VALUE
-    df_auto = df_user_tokens[df_user_tokens['symbol'].isin(auto_reward_list.values())]
+    df_auto = df_user_tokens[df_user_tokens['symbol'].isin(auto_reward_list.keys())]
     # if there are auto tokens add them to database and record values
 
     if not df_auto.empty:
@@ -122,21 +122,26 @@ def add_token_from_user(user):
         logging.info('no safe token found')
 
 
-def get_user_token_balance(address):
-    # retrieve user token balance
-    # TODO ONLY ONE LOOP
+# get user address and a token return token metrics if he has it
+def get_user_metrics(address, sym):
+    # get token contract
+    contract = auto_reward_list.get(sym).lower()
+    address = address.lower()
     u = User.query.filter(User.address == address).all()[0]
-    lof_token = Token.query.filter(Token.user_id == u.id).all()
-    ll = [t.contract for t in lof_token]
-    kk = [auto_reward_list.get(x) for x in ll]
-    lof_balance = [round(get_token_balance_from_contract(contract=t.contract, address=address, network='bsc')['value'], 3)
-                   for t in lof_token]
-    lof_old_balance = [t.record['value'] for t in lof_token]
-    data = {k: [x, round(100*((x-y)/y), 7), round(x-y, 3)] for k, x, y in zip(kk, lof_balance, lof_old_balance)}
-    res = data.copy()
-    y = {i: [None, None, None] for i in list(set(auto_reward_list.values())-set(data.keys()))}
-    res.update(y)
-    return res
+    is_token = Token.query.filter((Token.contract == contract) & (Token.user_id == u.id)).all()
+    metrics = {'balance': 0, 'returns': 0, 'rewards': 0, 'time': 0}
+    if len(is_token) > 0:
+        t = is_token[0]
+        balance = round(get_token_balance_from_contract(contract=t.contract,
+                                                        address=address,
+                                                        network='bsc')['value'], 3)
+        record = t.record['value']
+        log_time = t.record['log_time']
+        metrics['balance'] = balance
+        metrics['returns'] = round(100*(balance-record)/record, 7)
+        metrics['rewards'] = round(balance-record, 3)
+        metrics['time'] = str(datetime.now() - datetime.fromtimestamp(log_time))
+    return metrics
 
 
 def add_user(address):

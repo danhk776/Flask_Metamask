@@ -4,6 +4,11 @@
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+
+ body{
+   margin:0;
+   padding: 0;
+  }
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -8194,3 +8199,111 @@ h1, h2, h3, h4, h5,
     font-size: 14px;
     font-weight: regular;
     color: #EFEFEF;}
+
+
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro);
+
+.select-box {
+  cursor: pointer;
+  position : relative;
+  max-width:  20em;
+  margin: 5em auto;
+  width: 100%;
+}
+
+.select,
+.label {
+  color: #414141;
+  display: block;
+  font: 400 17px/2em 'Source Sans Pro', sans-serif;
+}
+
+.select {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  padding: 5px 0;
+  height: 40px;
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  background: none transparent;
+  border: 0 none;
+}
+.select-box1 {
+  background: #ececec;
+}
+
+.label {
+  position: relative;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.open .label::after {
+   content: "▲";
+}
+.label::after {
+  content: "▼";
+  font-size: 12px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 5px 15px;
+  border-left: 5px solid #fff;
+}
+
+.logo{
+    margin-left:2%;
+}
+
+.enableEthereumButton {
+    background-color:#E2DAF2;
+    border-radius:15px;
+    //border:1px solid #3F41E8;
+    border: none;
+    display:inline-block;
+    cursor:pointer;
+    color:grey;
+    font-family:Arial;
+    font-size:16px;
+    padding:13px 20px;
+    text-decoration:none;
+    color: #5271FF;
+    margin-right:2%;
+    }
+    .enableEthereumButton:active {
+    position:relative;
+    top:1px;
+    }
+    .enableEthereumButton:hover {
+    opacity: 0.5;
+    }
+
+
+p.title {
+    font-family: monospace;
+    font-size:25px;
+    color: black;
+    font-weight: normal;
+    margin-left:45%;
+}
+
+p.value {
+    font-family: monospace;
+    font-size:25px;
+    color: black;
+    font-weight: bold;
+}
+
+p.subtitle {
+font-style: italic;
+font-size:25px;
+}
+
+.text{
+  display: flex;                  /* establish flex container */
+  flex-direction: row;            /* default value; can be omitted */
+  flex-wrap: nowrap;              /* default value; can be omitted */
+  justify-content: space-between; /* switched from default (flex-start, see below) */
+  margin-left:20%;
+  margin-right:20%;
+}
