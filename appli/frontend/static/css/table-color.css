@@ -8313,3 +8313,9 @@ font-size:25px;
 .main-logo{
   padding-right: 4%;
 }
+
+.info {
+font-style: italic;
+font-size:20px;
+margin-left:20%;
+}
