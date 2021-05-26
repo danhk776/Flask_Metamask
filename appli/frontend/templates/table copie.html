@@ -14,9 +14,10 @@
 	  <style>
 body {
   background-color: #323739;
-  background-image: url("{{ url_for('static', filename='image/anysafe2.png') }}");
+  //background-image: url("{{ url_for('static', filename='image/anysafe.png') }}");
   //background-size: cover;
   background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 
 
@@ -43,6 +44,9 @@ font-size:16px;}
 		<div class="col logo">
 			<p align="left" style="font-weight:bold;"> <img src="{{ url_for('static', filename='image/metamask_logo.svg') }}" width="35" height="35" />
 				<span class="showAccount"></span></p>
+		</div>
+		<div class="col main-logo">
+			<img src="{{ url_for('static', filename='image/A.png') }}">
 
 		</div>
 		<div class="col " style="padding-top: 15px;">
