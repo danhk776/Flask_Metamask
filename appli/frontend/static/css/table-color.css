@@ -8263,7 +8263,7 @@ h1, h2, h3, h4, h5,
     display:inline-block;
     cursor:pointer;
     color:grey;
-    font-family:Arial;
+    font-family: 'Tomorrow';
     font-size:16px;
     padding:13px 20px;
     text-decoration:none;
@@ -8306,16 +8306,20 @@ font-size:25px;
   margin-left:20%;
   margin-right:20%;
   color: #5271FF;
-  font-family: monospace;
+  font-family: 'Tomorrow';
   font-size:20px;
 }
 
 .main-logo{
-  padding-right: 4%;
 }
+
 
 .info {
 font-style: italic;
 font-size:20px;
 margin-left:20%;
+}
+
+.footer{
+    background-color: #323739;
 }

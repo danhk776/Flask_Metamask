@@ -1,20 +1,12 @@
 from appli import app
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from flask import Flask, render_template, request, jsonify
-#from hello import get_token_balance_from_contract, get_token_list_from_address
+from flask import render_template, request
 from metamask import get_token_balance_from_contract, get_token_list_from_address, user_connection, \
     get_user_metrics
 
 
 @app.route('/')
 def index():
-    return render_template('table copie.html')
-
-
-@app.route('/table')
-def table():
-    return render_template('table copie.html')
+    return render_template('anysafe.html')
 
 
 # ###################
