@@ -129,7 +129,7 @@ def get_user_metrics(address, sym):
     address = address.lower()
     u = User.query.filter(User.address == address).all()[0]
     is_token = Token.query.filter((Token.contract == contract) & (Token.user_id == u.id)).all()
-    metrics = {'balance': 0, 'returns': 0, 'rewards': 0, 'time': 0}
+    metrics = {'sym': sym, 'balance': 0, 'returns': 0, 'rewards': 0, 'time': 0}
     if len(is_token) > 0:
         t = is_token[0]
         balance = round(get_token_balance_from_contract(contract=t.contract,
@@ -137,10 +137,11 @@ def get_user_metrics(address, sym):
                                                         network='bsc')['value'], 3)
         record = t.record['value']
         log_time = t.record['log_time']
+        metrics['sym'] = sym
         metrics['balance'] = balance
         metrics['returns'] = round(100*(balance-record)/record, 7)
         metrics['rewards'] = round(balance-record, 3)
-        metrics['time'] = str(datetime.now() - datetime.fromtimestamp(log_time))
+        metrics['time'] = str(datetime.now() - datetime.fromtimestamp(log_time)).split('.')[0]
     return metrics
 
 

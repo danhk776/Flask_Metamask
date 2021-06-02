@@ -8213,7 +8213,8 @@ h1, h2, h3, h4, h5,
 
 .select,
 .label {
-  color: #414141;
+  //color: #414141;
+  color: white;
   display: block;
   font: 400 17px/2em 'Source Sans Pro', sans-serif;
 }
@@ -8230,7 +8231,7 @@ h1, h2, h3, h4, h5,
   border: 0 none;
 }
 .select-box1 {
-  background: #ececec;
+  //background: #8D8B8B;
 }
 
 .label {
@@ -8248,7 +8249,6 @@ h1, h2, h3, h4, h5,
   right: 0;
   top: 0;
   padding: 5px 15px;
-  border-left: 5px solid #fff;
 }
 
 .logo{
@@ -8262,7 +8262,6 @@ h1, h2, h3, h4, h5,
     border: none;
     display:inline-block;
     cursor:pointer;
-    color:grey;
     font-family: 'Tomorrow';
     font-size:16px;
     padding:13px 20px;
@@ -8280,22 +8279,28 @@ h1, h2, h3, h4, h5,
 
 
 p.title {
-    font-family: monospace;
-    font-size:25px;
-    margin-left:45%;
+    font-family: "Tomorrow";
     color: #5271FF;
+    border-radius:15px;
+    border: none;
+    display:inline-block;
+    cursor:pointer;
+    font-size:16px;
+    padding:13px 20px;
+    text-decoration:none;
 }
 
 p.value {
-    font-family: monospace;
+    //font-family: monospace;
     font-size:25px;
-    font-weight: bold;
+    //font-weight: bold;
     color: #5271FF;
 }
 
 p.subtitle {
 font-style: italic;
 font-size:25px;
+color: #5271FF;
 }
 
 .text{
@@ -8305,12 +8310,12 @@ font-size:25px;
   justify-content: space-between; /* switched from default (flex-start, see below) */
   margin-left:20%;
   margin-right:20%;
-  color: #5271FF;
   font-family: 'Tomorrow';
   font-size:20px;
 }
 
 .main-logo{
+    margin-right: 4%;
 }
 
 
@@ -8321,5 +8326,5 @@ margin-left:20%;
 }
 
 .footer{
-    background-color: #323739;
+    background-color: #1E2232;
 }

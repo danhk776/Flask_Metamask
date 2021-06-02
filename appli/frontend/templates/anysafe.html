@@ -6,27 +6,24 @@
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/table-color.css') }}">
 	 <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
 	  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
-
-
 	  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
 	  <style>
 body {
-  background-color: #323739;
-  //background-image: url("{{ url_for('static', filename='image/anysafe.png') }}");
-  //background-size: cover;
+  background-color: #1E2232;
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
 
 
 .showAccount {
-color: gray;
+font-family: 'Tomorrow';
+color: #5271FF;
 position: absolute;
 margin:0px;
 padding:20px;
-font-size:16px;}
+font-size:18px;}
 
 .showAccount:active {
  //position:relative;
@@ -46,19 +43,12 @@ font-size:16px;}
 				<span class="showAccount"></span></p>
 		</div>
 		<div class="col main-logo" align="center">
-			<img src="{{ url_for('static', filename='image/logo.purple.png') }}">
-
+			<img src="{{ url_for('static', filename='image/logo.png') }}" />
 		</div>
 		<div class="col " style="padding-top: 15px;">
 			<button class="enableEthereumButton float-right">Connect to Metamask</button>
 		</div>
 	</div>
-	</div>
-	<hr>
-
-	<br>
-	<div align="center">
-		<button class="enableEthereumButton">Connect to Metamask</button>
 	</div>
 
 	<div class="select-box">
@@ -73,14 +63,12 @@ font-size:16px;}
 		</select>
 
 	</div>
-
-	<p class="title">BALANCE</p>
-	<p align="center" style="color:white;" class="value"><span class="balance"></span></p>
+	<p class="subtitle" align="center">Rewards calculator for Auto Staking Protocol</p>
 
 	<hr>
 
 	<div class="text">
-		<p>RETURN</p>
+		<p>APY</p>
 		<p>TOKEN REWARDS</p>
 		<p>STAKING TIME</p>
 	</div>
@@ -91,10 +79,10 @@ font-size:16px;}
 		<p class="value" style="color:white;"><span class="staking_time"></span></p>
 	</div>
 
+
 	<hr>
 
 	<br>
-	<p class="subtitle" align="center">Rewards calculator for Auto Staking Protocol</p>
 	<br>
 	<br>
 
@@ -116,6 +104,8 @@ font-size:16px;}
 var my_account;
 var e;
 const showAccount = document.querySelector('.showAccount');
+const button = document.querySelector('.enableEthereumButton');
+
 const balance = document.querySelector('.balance');
 const returns = document.querySelector('.returns');
 const rewards = document.querySelector('.rewards');
@@ -137,7 +127,7 @@ async function getAccount() {
    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
    const account = accounts[0];
    showAccount.innerHTML = account.slice(0, 15) + "...";
-   // returns list of tokens hold by user
+   button.innerHTML = account.slice(0, 15) + "...";
    user_connection(account);
    my_account = account;
    setInterval( function () {
@@ -172,14 +162,15 @@ $("select").on("change" , function() {
   label.find(".label-desc").html(selection);
 });
 
+
 async function get_user_metrics(address, sym) {
     $.post("/user_metrics",
     {'address': address, 'sym': sym},
     function(data){
-    balance.innerHTML = data.balance;
+    showAccount.innerHTML = data.sym + " "+ data.balance;
     returns.innerHTML = data.returns + '%';
-    rewards.innerHTML = data.rewards;
-    staking_time.innerHTML = data.time;
+    rewards.innerHTML = "<img src='{{ url_for('static', filename='image/coin.png') }}' width='25' height='25' />"+ " "+data.rewards;
+    staking_time.innerHTML = "<img src='{{ url_for('static', filename='image/time.png') }}' width='25' height='25' />"+" "+data.time;
     }
     );
 }
