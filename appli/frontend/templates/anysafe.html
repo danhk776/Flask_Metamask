@@ -153,6 +153,7 @@ $(document).mouseup(function (e)
     }
 });
 
+$("select").prop("selectedIndex", -1);
 $("select").on("change" , function() {
 
   var selection = $(this).find("option:selected").text(),
