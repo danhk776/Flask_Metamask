@@ -1,6 +1,4 @@
 import time
-
-import celery
 import numpy as np
 import requests
 import pandas as pd
@@ -29,8 +27,7 @@ auto_reward_list = {'SAFEMOON': '0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3',
                      'FEG': '0xacfc95585d80ab62f67a14c566c1b7a49fe91167',
                     'SAFEMARS': '0x3ad9594151886ce8538c1ff615efa2385a8c3a88',
                     'SAFEBTC': '0x380624a4a7e69db1ca07deecf764025fc224d056',
-                    'FOX': '0xfad8e46123d7b4e77496491769c167ff894d2acb',
-                    'OCTA': '0x86c3e4ffacdb3af628ef985a518cd6ee22a22b28'}
+                    'FOX': '0xfad8e46123d7b4e77496491769c167ff894d2acb'}
 
 # SAMPLE ADDRESS AND CONTRACT TO PLAY WITH
 
@@ -93,6 +90,34 @@ def get_token_list_from_address(address, network):
     return df_token_list
 
 
+def get_token_price(base_currency, quote_currency):
+    query = """query{
+                ethereum(network: bsc) {
+                 dexTrades(
+                 exchangeName: {in: ["Pancake", "Pancake v2"]}
+                 baseCurrency: {is: %s}
+                 quoteCurrency: {is: %s}) 
+                 {
+                 baseCurrency {
+                 symbol
+                 address
+                 }
+                 baseAmount
+                 quoteCurrency {
+                 symbol
+                 address
+                 }
+                 close_price: maximum(of: block, get: quote_price)
+                 }
+                }     
+            } 
+            """
+    query_pass = query % (f'"{base_currency}"', f'"{quote_currency}"')
+    result = run_query(query_pass)  # Execute the query
+    close_price = result['data']['ethereum']['dexTrades'][0]['close_price']
+    return close_price
+
+
 def add_token_from_user(user):
     df_user_tokens = get_token_list_from_address(address=user.address, network='bsc')
     # retrieve user auto reward tokens
@@ -129,18 +154,21 @@ def get_user_metrics(address, sym):
     address = address.lower()
     u = User.query.filter(User.address == address).all()[0]
     is_token = Token.query.filter((Token.contract == contract) & (Token.user_id == u.id)).all()
-    metrics = {'sym': sym, 'balance': 0, 'returns': 0, 'rewards': 0, 'time': 0}
+    metrics = {'sym': sym, 'balance': 0, 'returns': 0, 'rewards': 0, 'time': 0, 'usd_rewards': 0}
     if len(is_token) > 0:
         t = is_token[0]
         balance = round(get_token_balance_from_contract(contract=t.contract,
                                                         address=address,
                                                         network='bsc')['value'], 3)
+        # '0xe9e7cea3dedca5984780bafc599bd69add087d56' is BUSD
+        price = get_token_price(base_currency=contract, quote_currency='0xe9e7cea3dedca5984780bafc599bd69add087d56')
         record = t.record['value']
         log_time = t.record['log_time']
         metrics['sym'] = sym
         metrics['balance'] = balance
         metrics['returns'] = round(100*(balance-record)/record, 7)
         metrics['rewards'] = round(balance-record, 3)
+        metrics['usd_rewards'] = round(metrics['rewards']*float(price), 3)
         metrics['time'] = str(datetime.now() - datetime.fromtimestamp(log_time)).split('.')[0]
     return metrics
 

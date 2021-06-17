@@ -56,14 +56,13 @@ font-size:18px;}
 		<label for="select-box1" class="label select-box1"><span class="label-desc">Choose your token</span> </label>
 		<select id="select-box1" class="select">
 			<option value="SAFEMOON">SAFEMOON</option>
-			<option value="OCTA">OCTA</option>
 			<option value="SAFEMARS">SAFEMARS</option>
 			<option value="SAFEBTC">SAFEBTC</option>
 			<option value="FEG">FEG</option>
 		</select>
 
 	</div>
-	<p class="subtitle" align="center">Rewards calculator for Auto Staking Protocol</p>
+	<p class="subtitle" align="center">Rewards calculator for Deflationary Tokens</p>
 
 	<hr>
 
@@ -86,9 +85,9 @@ font-size:18px;}
 	<br>
 	<br>
 
-	<div class="info">
-	<p>How it works ?</p>
 
+	<p align="center">How it works ?</p>
+	<div class="info">
 	<ul>
 		<li>STEP 1 : Connect your Metamask wallet through the button</li>
 		<br>
@@ -97,12 +96,23 @@ font-size:18px;}
 		<li>STEP 3 : Rewards data are computed and displayed on the dashboard</li>
 	</ul>
 	</div>
+		<br>
+		<p align="center">What is a deflationary token ?</p>
+		<br>
+	<div class="info">
+		<ul>
+			<li>		<a href="https://bscscan.com/tokens/label/deflationary?subcatid=undefined&size=50&start=0&col=3&order=desc">Check Documentation here</a>
+			</li>
+		</ul>
+	</div>
+
+
 	<header>
 	</header>
 	<script>
 
 var my_account;
-var e;
+var token_selection;
 const showAccount = document.querySelector('.showAccount');
 const button = document.querySelector('.enableEthereumButton');
 
@@ -110,6 +120,7 @@ const balance = document.querySelector('.balance');
 const returns = document.querySelector('.returns');
 const rewards = document.querySelector('.rewards');
 const staking_time = document.querySelector('.staking_time');
+
 
 $(".enableEthereumButton").on('click', function(event){
     getAccount();
@@ -123,6 +134,7 @@ function user_connection(address) {
 }
 
 
+
 async function getAccount() {
    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
    const account = accounts[0];
@@ -130,10 +142,6 @@ async function getAccount() {
    button.innerHTML = account.slice(0, 15) + "...";
    user_connection(account);
    my_account = account;
-   setInterval( function () {
-   e = document.getElementById("select-box1");
-   get_user_metrics(my_account, e.value);
-   }, 3000);
 }
 
 
@@ -161,6 +169,12 @@ $("select").on("change" , function() {
       label = $("[for='" + labelFor + "']");
 
   label.find(".label-desc").html(selection);
+
+   	setInterval( function () {
+   token_selection = document.getElementById("select-box1");
+   get_user_metrics(my_account, token_selection.value);
+   }, 3000);
+
 });
 
 
@@ -170,7 +184,7 @@ async function get_user_metrics(address, sym) {
     function(data){
     showAccount.innerHTML = data.sym + " "+ data.balance;
     returns.innerHTML = data.returns + '%';
-    rewards.innerHTML = "<img src='{{ url_for('static', filename='image/coin.png') }}' width='25' height='25' />"+ " "+data.rewards;
+    rewards.innerHTML = "<img src='{{ url_for('static', filename='image/coin.png') }}' width='25' height='25' />"+ " "+data.rewards + ' ($'+data.usd_rewards + ')';
     staking_time.innerHTML = "<img src='{{ url_for('static', filename='image/time.png') }}' width='25' height='25' />"+" "+data.time;
     }
     );

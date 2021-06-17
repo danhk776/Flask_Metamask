@@ -65,6 +65,7 @@ def get_token_list_from_address(address, network):
                 ethereum(network: %s) {
                     address(address: {is: %s}) {
                         balances {
+                            value
                             currency {
                                 address
                                 symbol
