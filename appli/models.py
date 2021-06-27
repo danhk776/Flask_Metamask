@@ -17,6 +17,7 @@ class Token(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     contract = db.Column(db.String)
+    network = db.Column(db.String)
     record = db.Column(db.JSON)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
