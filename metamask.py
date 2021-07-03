@@ -1,8 +1,6 @@
-import numpy as np
 import requests
 import pandas as pd
 from bscscan import BscScan
-from etherscan import Etherscan
 from datetime import datetime
 from appli import app, db
 from appli.models import User, Token
