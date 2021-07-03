@@ -20,8 +20,7 @@ _GLOB = 1
 BINANCE_API_KEY = 'QAM1FFIJCJBSQAC3E3J6TXHB3KJVMM4ZJY'
 ETH_API_KEY = 'VQ2TF3GG3XT5BHM897WBK6R3JTVIBARFN1'
 bsc = BscScan(BINANCE_API_KEY)
-eth = Etherscan(ETH_API_KEY)
-chain = {'bsc': bsc, 'ethereum': eth}
+chain = {'bsc': bsc}
 
 auto_reward_list = {'SAFEMOON': ['0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3', 'bsc'],
                     'BabyDoge': ['0xc748673057861a797275CD8A068AbB95A902e8de', 'bsc']}
