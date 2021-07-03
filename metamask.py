@@ -25,11 +25,8 @@ bsc = BscScan(BINANCE_API_KEY)
 eth = Etherscan(ETH_API_KEY)
 chain = {'bsc': bsc, 'ethereum': eth}
 
-auto_reward_list = {'SAFEMOON': '0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3',
-                     'FEG': '0xacfc95585d80ab62f67a14c566c1b7a49fe91167',
-                    'SAFEMARS': '0x3ad9594151886ce8538c1ff615efa2385a8c3a88',
-                    'SAFEBTC': '0x380624a4a7e69db1ca07deecf764025fc224d056',
-                    'FOX': '0xfad8e46123d7b4e77496491769c167ff894d2acb'}
+auto_reward_list = {'SAFEMOON': ['0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3', 'bsc'],
+                    'BabyDoge': ['0xc748673057861a797275CD8A068AbB95A902e8de', 'bsc']}
 
 # SAMPLE ADDRESS AND CONTRACT TO PLAY WITH
 
@@ -50,7 +47,7 @@ def get_token_balance_from_contract(contract, address, network):
             token = api.get_acc_balance_by_token_contract_address(contract_address=contract, address=address)
         else:
             token = api.get_acc_balance_by_token_and_contract_address(contract_address=contract, address=address)
-        token_amount = {'value': float(token)/10**9, 'log_time': datetime.now().timestamp()}
+        token_amount = {'value': float(token)/10**9, 'contract': contract, 'network': network, 'log_time': datetime.now().timestamp()}
         return token_amount
 
 
@@ -95,9 +92,9 @@ def get_token_list_from_address(address, network):
     return df_token_list
 
 
-def get_token_price(base_currency, quote_currency):
+def get_token_price(base_currency, quote_currency, network):
     query = """query{
-                ethereum(network: bsc) {
+                ethereum(network: %s) {
                  dexTrades(
                  exchangeName: {in: ["Pancake", "Pancake v2"]}
                  baseCurrency: {is: %s}
@@ -107,72 +104,60 @@ def get_token_price(base_currency, quote_currency):
                  symbol
                  address
                  }
-                 baseAmount
                  quoteCurrency {
                  symbol
                  address
                  }
                  close_price: maximum(of: block, get: quote_price)
+                 quotePrice
                  }
                 }     
             } 
             """
-    query_pass = query % (f'"{base_currency}"', f'"{quote_currency}"')
+    query_pass = query % (f'{network}', f'"{base_currency}"', f'"{quote_currency}"')
     result = run_query(query_pass)  # Execute the query
     close_price = result['data']['ethereum']['dexTrades'][0]['close_price']
     return close_price
 
 
 def add_token_from_user(user):
-    lof_contract = []
-    lof_value = []
-    df_user_tokens_bsc = get_token_list_from_address(address=user.address, network='bsc')
-    df_user_tokens_eth = get_token_list_from_address(address=user.address, network='ethereum')
-    df_user_tokens = df_user_tokens_eth.append(df_user_tokens_bsc, ignore_index=True)
     # retrieve user auto reward tokens
+    lof_values = [get_token_balance_from_contract(contract=x[0], address=user.address, network=x[1])
+                  for x in list(auto_reward_list.values())]
+    lof_token = [x for x in lof_values if x['value']]
     # TODO PUT LOWER CASE AND KEY VALUE
-    df_auto = df_user_tokens[df_user_tokens['symbol'].isin(auto_reward_list.keys())]
     # if there are auto tokens add them to database and record values
-
-    if not df_auto.empty:
-        # lof_contract = sorted(df_auto['address'].values, key=list(auto_reward_list.values()).index)
-        lof_contract = df_auto['address'].values
-        lof_network = df_auto['network'].values
-        lof_value = [get_token_balance_from_contract(contract=x[1], address=user.address, network=x[2])
-                     for x in df_auto.values]
-        for i in np.arange(len(lof_contract)):
-            # do user has this contract ?
-            contract = lof_contract[i]
-            record = lof_value[i]
-            network = lof_network[i]
-            is_token = Token.query.filter((Token.contract == contract) & (Token.user_id == user.id)).all()
-            if len(is_token) == 0:
-                logging.info(msg=f'Adding contract: {contract} from user: ' + '<User {}>'.format(user.address))
-                db.session.add(Token(contract=contract, record=record, network=network, user=user))
-                db.session.commit()
-            else:
-                t = is_token[0]
-                logging.info(msg='<Token {}>'.format(t.contract) + ' already found from user: ' + '<User {}>'.format(user.address))
-
-    else:
-        logging.info('no safe token found')
+    for token_to_add in lof_token:
+        contract = token_to_add['contract'].lower()
+        record = {'value': token_to_add['value'], 'log_time': token_to_add['log_time']}
+        network = token_to_add['network']
+        # do user has this contract ?
+        is_token = Token.query.filter((Token.contract == contract) & (Token.user_id == user.id)).all()
+        if len(is_token) == 0:
+            logging.info(msg=f'Adding contract: {contract} from user: ' + '<User {}>'.format(user.address))
+            db.session.add(Token(contract=contract, record=record, network=network, user=user))
+            db.session.commit()
+        else:
+            t = is_token[0]
+            logging.info(msg='<Token {}>'.format(t.contract) + '<on network {}>'.format(t.network) + ' already found from user: ' + '<User {}>'.format(user.address))
 
 
-# get user address and a token return token metrics if he has it
+# get user address and a token, return token metrics if he hold it
 def get_user_metrics(address, sym):
     # get token contract
-    contract = auto_reward_list.get(sym).lower()
+    contract = auto_reward_list.get(sym)[0].lower()
     address = address.lower()
     u = User.query.filter(User.address == address).all()[0]
+    print(Token.query.all)
     is_token = Token.query.filter((Token.contract == contract) & (Token.user_id == u.id)).all()
-    metrics = {'sym': sym, 'balance': 0, 'returns': 0, 'rewards': 0, 'time': 0, 'usd_rewards': 0}
+    metrics = {'sym': sym, 'balance': 0, 'returns': 0, 'rewards': 0, 'time': 0, 'usd_rewards': 0, 'usd_balance': 0}
     if len(is_token) > 0:
         t = is_token[0]
         balance = round(get_token_balance_from_contract(contract=t.contract,
                                                         address=address,
                                                         network=t.network)['value'], 3)
         # '0xe9e7cea3dedca5984780bafc599bd69add087d56' is BUSD
-        price = get_token_price(base_currency=contract, quote_currency='0xe9e7cea3dedca5984780bafc599bd69add087d56')
+        price = get_token_price(base_currency=contract, quote_currency='0xe9e7cea3dedca5984780bafc599bd69add087d56', network="bsc")
         record = t.record['value']
         log_time = t.record['log_time']
         metrics['sym'] = sym
@@ -181,6 +166,7 @@ def get_user_metrics(address, sym):
         metrics['rewards'] = round(balance-record, 3)
         metrics['usd_rewards'] = round(metrics['rewards']*float(price), 3)
         metrics['time'] = str(datetime.now() - datetime.fromtimestamp(log_time)).split('.')[0]
+        metrics['usd_balance'] = round(balance*float(price), 3)
     return metrics
 
 

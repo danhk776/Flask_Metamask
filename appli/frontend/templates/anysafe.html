@@ -56,9 +56,7 @@ font-size:18px;}
 		<label for="select-box1" class="label select-box1"><span class="label-desc">Choose your token</span> </label>
 		<select id="select-box1" class="select">
 			<option value="SAFEMOON">SAFEMOON</option>
-			<option value="SAFEMARS">SAFEMARS</option>
-			<option value="SAFEBTC">SAFEBTC</option>
-			<option value="FEG">FEG</option>
+			<option value="BabyDoge">BabyDoge</option>
 		</select>
 
 	</div>
@@ -173,7 +171,7 @@ $("select").on("change" , function() {
    	setInterval( function () {
    token_selection = document.getElementById("select-box1");
    get_user_metrics(my_account, token_selection.value);
-   }, 3000);
+   }, 1500);
 
 });
 
@@ -182,7 +180,7 @@ async function get_user_metrics(address, sym) {
     $.post("/user_metrics",
     {'address': address, 'sym': sym},
     function(data){
-    showAccount.innerHTML = data.sym + " "+ data.balance;
+    showAccount.innerHTML = data.sym + " "+ data.balance + ' ($' + data.usd_balance + ')';
     returns.innerHTML = data.returns + '%';
     rewards.innerHTML = "<img src='{{ url_for('static', filename='image/coin.png') }}' width='25' height='25' />"+ " "+data.rewards + ' ($'+data.usd_rewards + ')';
     staking_time.innerHTML = "<img src='{{ url_for('static', filename='image/time.png') }}' width='25' height='25' />"+" "+data.time;
