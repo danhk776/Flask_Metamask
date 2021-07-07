@@ -7,7 +7,7 @@
 	 <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
 	  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
 	  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	  <link href="http://fonts.cdnfonts.com/css/adumu-inline" rel="stylesheet">	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
 	  <style>
 body {
@@ -50,6 +50,11 @@ font-size:18px;}
 		</div>
 	</div>
 	</div>
+	<div class="doge">
+		<img src="{{ url_for('static', filename='image/floki_shiba.png') }}" width="100" height="100" />
+		<img src="{{ url_for('static', filename='image/babydoge.png') }}" width="100" height="100" />
+		<img src="{{ url_for('static', filename='image/safemoon.png') }}" width="100" height="100" />
+	</div>
 
 	<div class="select-box">
 
@@ -57,25 +62,21 @@ font-size:18px;}
 		<select id="select-box1" class="select">
 			<option value="SAFEMOON">SAFEMOON</option>
 			<option value="BabyDoge">BabyDoge</option>
+			<option value="Floki Shiba">Floki Shiba</option>
 		</select>
 
 	</div>
-	<p class="subtitle" align="center">Rewards calculator for Deflationary Tokens</p>
-
-	<hr>
-
 	<div class="text">
 		<p>YIELD</p>
 		<p>TOKEN REWARDS</p>
 		<p>STAKING TIME</p>
 	</div>
-
-	<div class="text">
+	<div class="text-val">
 		<p class="value" style="color:white;"><span class="returns"></span></p>
 		<p class="value" style="color:white;"><span class="rewards"></span></p>
 		<p class="value" style="color:white;"><span class="staking_time"></span></p>
 	</div>
-
+	<p class="subtitle" align="center">Rewards calculator for Deflationary Tokens</p>
 
 	<hr>
 

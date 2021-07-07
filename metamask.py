@@ -23,7 +23,9 @@ bsc = BscScan(BINANCE_API_KEY)
 chain = {'bsc': bsc}
 
 auto_reward_list = {'SAFEMOON': ['0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3', 'bsc'],
-                    'BabyDoge': ['0xc748673057861a797275CD8A068AbB95A902e8de', 'bsc']}
+                    'BabyDoge': ['0xc748673057861a797275CD8A068AbB95A902e8de', 'bsc'],
+                    'Floki Shiba': ['0x3dab450ee6451762e72647a05a205dd5697c5c2c', 'bsc']
+                    }
 
 # SAMPLE ADDRESS AND CONTRACT TO PLAY WITH
 

@@ -8299,6 +8299,7 @@ p.subtitle {
 font-style: italic;
 font-size:20px;
 color: #5271FF;
+font-family: 'Adumu Inline', sans-serif;
 }
 
 .text{
@@ -8308,8 +8309,19 @@ color: #5271FF;
   justify-content: space-between; /* switched from default (flex-start, see below) */
   margin-left:20%;
   margin-right:20%;
+  font-family: 'Adumu Inline', sans-serif;
+  font-size:19px;
+}
+
+.text-val{
+  display: flex;                  /* establish flex container */
+  flex-direction: row;            /* default value; can be omitted */
+  flex-wrap: nowrap;              /* default value; can be omitted */
+  justify-content: space-between; /* switched from default (flex-start, see below) */
+  margin-left:20%;
+  margin-right:20%;
   font-family: 'Tomorrow';
-  font-size:22px;
+  font-size:19px;
 }
 
 .main-logo{
@@ -8330,4 +8342,13 @@ color: white;
 
 a {
 color: white;
+}
+
+.doge{
+  display: flex;                  /* establish flex container */
+  flex-direction: row;            /* default value; can be omitted */
+  flex-wrap: nowrap;              /* default value; can be omitted */
+  justify-content: space-between; /* switched from default (flex-start, see below) */
+  margin-left:20%;
+  margin-right:20%;
 }
